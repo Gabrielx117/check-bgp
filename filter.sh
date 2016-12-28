@@ -1,4 +1,2 @@
-####过滤结果
-cat result.1 | grep \/ | sort -n | uniq > result.1s
-####对比文件
-comm -23 result.1s users
+####过滤结果####对比文件
+cat result.tmp | grep \/ | sort -n | uniq | grep -F -v -f  users.sorted
