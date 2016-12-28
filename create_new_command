@@ -1,0 +1,13 @@
+##生成NE40命令
+if [ "$2" == "-N" ] || [ "$2" == "-ne40" ]
+	then
+	sed -i 's/^/dis cu | in /' "$1"
+	sed -i 's/\/.*//g' "$1"
+fi
+######开头添加 dis cu | in  前######去除/xx 后缀
+#生成mx960命令
+if [ "$2" == "-m" ]
+	then
+	sed -i 's/^/sh route /' "$1"
+	sed -i 's/$/ |match "OSPF|Static" |match \\\*/' "$1"
+fi
