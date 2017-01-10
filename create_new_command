@@ -1,10 +1,10 @@
 #!/bin/bash
 ##生成NE40命令
 if [ "$2" == "-N" ] || [ "$2" == "-ne40" ];then
-	echo  "`sed 's/^/dis cu | in /;s/\/.*//g' $1`"
+	echo  "`sed 's/^/undo ip route-static /;s/\// /g' $1`"
 ######开头添加 dis cu | in  前######去除/xx 后缀
 #生成mx960命令
-elif [ "$2" == "-m" ];then
+elif [ "$2" == "-M" ]  || [ "$2" == "-mx960" ];then
 	echo "`sed 's/^/sh route /; s/$/ |match "OSPF|Static" |match \\\*/g' $1`"
 else 
 	echo "You need help"
