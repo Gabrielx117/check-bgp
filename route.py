@@ -65,7 +65,7 @@ m = sys.argv[2]
 m=int(m)
 for i in range (n,m):
     i=str(i)
-    cmd=open(sys.path[0] + "/gwbn." + i)
+    cmd=open(sys.path[0] + "/mx960.cmd." + i)
     if (cmd == 0):
         print "no list file. please check!"
         sys.exit(1)
