@@ -8,12 +8,12 @@ import threading
 import os
 import socket
 
-def connect(hostip,module):
+def connect(loopback,device_type):
         username='xiayu'
         passwd='tjgwbn123'
-        if module == 'mx960':
+        if device_type == 'mx960':
                 login='ogin:'
-        elif module== 'ne40':
+        elif device_type== 'ne40':
                 login='name:'
         else:
                 print ("unknow device type")
@@ -35,10 +35,10 @@ def connect(hostip,module):
         else:
             print "telnet login failed, due to TIMEOUT or EOF"
             child.close(force=True)
-            return False 
-def ck_CR(loopback):
-        loginprompt = '[$#>]'
-        lj=connect(loopback,'mx960')
+            return False
+def check(loopback,device_type,cmd,keyword):
+        #loginprompt = '[$#>]'
+        lj=connect(loopback,device_type)
         if lj :
                 for c in cmd:
                         lj.sendline(c)
@@ -53,22 +53,21 @@ def ck_CR(loopback):
                 sys.exit(1)
         result=[]
         for line in lj.content:
-                if 'metric 1' in line:
+                if keyword in line:
                     l= line.strip().split()
                     result.append(l[0])
-        
         for s in result:
                 print s
-n = sys.argv[1]                
+n = sys.argv[1]
 n= int(n)
 m = sys.argv[2]
 m=int(m)
 for i in range (n,m):
     i=str(i)
-    cmd=open(sys.path[0] + "/mx960.cmd." + i)
+    mx960_cmd=open(sys.path[0] + "/mx960.cmd." + i)
     if (cmd == 0):
         print "no list file. please check!"
         sys.exit(1)
     print ('check ip route in list' + i)
-    check('220.113.135.52')
-    cmd.close()
+    check('220.113.135.52','mx960',mx960_cmd,'metric 1')
+    mx960_cmd.close()
