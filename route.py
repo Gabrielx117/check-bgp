@@ -70,5 +70,5 @@ for i in range (n,m):
         print "no list file. please check!"
         sys.exit(1)
     print ('check ip route in list' + i)
-    ck_CR('220.113.135.52')
+    check('220.113.135.52')
     cmd.close()
