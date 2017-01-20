@@ -1,12 +1,19 @@
 #!/bin/bash
 ##生成NE40命令
-if [ "$2" == "-N" ] || [ "$2" == "-ne40" ];then
-	echo  "`sed 's/^/undo ip route-static /;s/\// /g' $1`"
-######开头添加 dis cu | in  前######去除/xx 后缀
-#生成mx960命令
-elif [ "$2" == "-M" ]  || [ "$2" == "-mx960" ];then
-	echo "`sed 's/^/sh route /; s/$/ |match "OSPF|Static" |match \\\*/g' $1`"
-else 
-	echo "You need help"
-	exit 1
-fi
+case $1 in
+	-C|--ne40-config)
+		echo  "`sed 's/^/dis cu | in /;s/\/.*/ /g' $2`"
+		;;
+	-M|--mx960-ospf)
+		echo "`sed 's/^/sh route /; s/$/ |match "OSPF|Static" |match \\\*/g' $2`"
+		;;
+	-D|--ne40-del)
+		echo  "`sed 's/^/undo ip route-static /;s/\// /g' $2`"
+		;;
+	-A|--aspath)
+		echo "show route aspath-regex .*$2.* | match \* | except ^10\. | except ^14\. | except MED | match from | no-more"
+		;;
+	*)
+		echo "help context"
+    ;;
+esac
