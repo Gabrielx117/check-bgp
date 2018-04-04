@@ -14,7 +14,7 @@ result="result"
 
 get_as_ip() {
 sh ./create_new_command -A $1  > $as_cmd
-python ./run.py $as_cmd $loopback  $device_type BGP master $username $passwd > $asip
+python2.7 ./run.py $as_cmd $loopback  $device_type BGP master $username $passwd > $asip
 cat $asip | grep \/ | sort -n | uniq
 if [ $DEBUG == 0 ]; then
     rm $as_cmd
@@ -32,7 +32,7 @@ echo "" > $result_raw
 for ((i=0; i<$pages; i++)); do
 	s=$[ i * $size + 1 ]
 	cat $mx_cmd | tail -n +$s | head -n $size > ${mx_cmd}.$[$i+1]
-	python ./run.py ${mx_cmd}.$[$i+1] $loopback  $device_type metric master $username $passwd>> $result_raw
+	python2.7 ./run.py ${mx_cmd}.$[$i+1] $loopback  $device_type metric master $username $passwd>> $result_raw
 done
 ####执行python脚本进行数据查询
 ###与本地ip进行对比,剔除本网用户地址
